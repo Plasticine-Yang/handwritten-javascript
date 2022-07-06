@@ -12,12 +12,16 @@ export class MyPromise<T> {
   }
 
   private resolve(value: T): void {
-    if (this.state === MyPromiseState.PENDING) {
-      // 只有处于 pending 状态的时候才允许改变状态
-      this.state = MyPromiseState.RESOLVED
-      this.value = value
-      // 从任务队列中取出任务执行
-      this.onFullfilledCallbacks.forEach(fn => fn())
+    try {
+      if (this.state === MyPromiseState.PENDING) {
+        // 只有处于 pending 状态的时候才允许改变状态
+        this.state = MyPromiseState.RESOLVED
+        this.value = value
+        // 从任务队列中取出任务执行
+        this.onFullfilledCallbacks.forEach(fn => fn())
+      }
+    } catch (e) {
+      this.reject(e)
     }
   }
 

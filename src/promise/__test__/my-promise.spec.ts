@@ -52,4 +52,21 @@ describe('my-promise', () => {
     expect(fn2Spy).toHaveBeenCalledTimes(1)
     expect(fn3Spy).toHaveBeenCalledTimes(1)
   })
+
+  test('onRejected should handle error from onFullfilled', () => {
+    new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1)
+      }, 3000)
+    }).then(
+      value => {
+        expect(value).toBe(1)
+        throw new Error('error from onFullfilled')
+      },
+      reason => {
+        expect((reason as Error).message).toBe('error from onFullfilled')
+      }
+    )
+    jest.runAllTimers()
+  })
 })
