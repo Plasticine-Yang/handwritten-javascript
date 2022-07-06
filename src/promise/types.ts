@@ -29,3 +29,9 @@ export interface MyPromiseLike<T> {
     onRejected?: OnRejected<TResult2>
   ): MyPromiseLike<TResult1 | TResult2>
 }
+
+export const isObject = (value: unknown): value is object =>
+  value !== null && typeof value === 'object'
+
+export const isFunction = (value: unknown): value is Function =>
+  typeof value === 'function'

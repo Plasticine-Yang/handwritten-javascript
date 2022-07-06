@@ -88,4 +88,25 @@ describe('my-promise', () => {
         expect(value).toBe(3)
       })
   })
+
+  test('then can return MyPromise', () => {
+    new MyPromise<number>(resolve => {
+      resolve(1)
+    })
+      .then(value => {
+        expect(value).toBe(1)
+        return new MyPromise<number>(resolve => {
+          resolve(value++)
+        })
+      })
+      .then(
+        value => {
+          expect(value).toBe(2)
+          throw new Error('err')
+        },
+        reason => {
+          expect((reason as Error).message).toBe('err')
+        }
+      )
+  })
 })
