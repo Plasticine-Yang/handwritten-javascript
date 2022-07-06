@@ -1,4 +1,12 @@
-import { Executor, MyPromiseState, OnFullFilled, OnRejected } from './types'
+import {
+  Executor,
+  ExecutorReject,
+  ExecutorResolve,
+  MyPromiseLike,
+  MyPromiseState,
+  OnFullFilled,
+  OnRejected
+} from './types'
 
 export class MyPromise<T> {
   private state: MyPromiseState = MyPromiseState.PENDING
@@ -38,20 +46,83 @@ export class MyPromise<T> {
     onFullfilled?: OnFullFilled<T, TResult1>,
     onRejected?: OnRejected<TResult2>
   ) {
-    switch (this.state) {
-      case MyPromiseState.RESOLVED:
-        onFullfilled && onFullfilled(this.value)
-        break
-      case MyPromiseState.REJECTED:
-        onRejected && onRejected(this.reason)
-        break
-      case MyPromiseState.PENDING:
-        this.onFullfilledCallbacks.push(() => {
-          onFullfilled && onFullfilled(this.value)
+    // 返回一个 promise 实现链式调用
+    const promise2 = new MyPromise<TResult1 | TResult2>((resolve, reject) => {
+      // 将回调放到微任务队列中执行
+      const resolveMicrotask = () => {
+        queueMicrotask(() => {
+          try {
+            if (onFullfilled) {
+              const x = onFullfilled(this.value)
+              resolvePromise<TResult1>(
+                promise2 as MyPromise<TResult1>,
+                x,
+                resolve,
+                reject
+              )
+            }
+          } catch (e) {
+            reject(e)
+          }
         })
-        this.onRejectedCallbacks.push(() => {
-          onRejected && onRejected(this.reason)
+      }
+      const rejectMicrotask = () => {
+        queueMicrotask(() => {
+          try {
+            if (onRejected) {
+              const x = onRejected(this.reason)
+              resolvePromise<TResult2>(
+                promise2 as MyPromise<TResult2>,
+                x,
+                resolve,
+                reject
+              )
+            }
+          } catch (e) {
+            reject(e)
+          }
         })
-    }
+      }
+
+      switch (this.state) {
+        case MyPromiseState.RESOLVED:
+          resolveMicrotask()
+          break
+        case MyPromiseState.REJECTED:
+          rejectMicrotask()
+          break
+        case MyPromiseState.PENDING:
+          this.onFullfilledCallbacks.push(() => {
+            onFullfilled && onFullfilled(this.value)
+          })
+          this.onRejectedCallbacks.push(() => {
+            onRejected && onRejected(this.reason)
+          })
+      }
+    })
+
+    return promise2
+  }
+}
+
+function resolvePromise<T>(
+  promise2: MyPromise<T>,
+  x: T | MyPromiseLike<T>,
+  resolve: ExecutorResolve<T>,
+  reject: ExecutorReject
+) {
+  if (x === promise2) {
+    // 避免循环引用
+    return reject(
+      new Error('TypeError: Chaining cycle detected for promise #<MyPromise>')
+    )
+  }
+
+  if (x instanceof MyPromise) {
+    // 如果返回的 x 是一个 promise 则应当调用它的 then 方法
+    x.then(resolve, reject)
+  } else {
+    // 不是 promise 则直接返回
+    resolve(x as T)
   }
 }

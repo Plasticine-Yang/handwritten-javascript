@@ -69,4 +69,23 @@ describe('my-promise', () => {
     )
     jest.runAllTimers()
   })
+
+  test('should call chaining', () => {
+    new MyPromise<number>((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1)
+      }, 3000)
+    })
+      .then(value => {
+        expect(value).toBe(1)
+        return value++
+      })
+      .then(value => {
+        expect(value).toBe(2)
+        return value++
+      })
+      .then(value => {
+        expect(value).toBe(3)
+      })
+  })
 })
