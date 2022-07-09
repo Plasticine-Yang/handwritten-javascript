@@ -1,0 +1,17 @@
+{
+  "name": "@handwritten-javascript/my-promise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c rollup.esm.config.js",
+    "test": "promises-aplus-tests dist/cjs/index.js",
+    "lint": "prettier --cache -w src && eslint --cache --fix --ext js,ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "promises-aplus-tests": "^2.1.2"
+  }
+}

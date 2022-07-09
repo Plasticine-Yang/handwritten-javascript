@@ -23,7 +23,6 @@ importers:
       jest: ^28.1.2
       lint-staged: ^13.0.3
       prettier: ^2.7.1
-      promises-aplus-tests: ^2.1.2
       rollup: ^2.75.7
       rollup-plugin-esbuild: ^4.9.1
       ts-jest: ^28.0.5
@@ -49,12 +48,17 @@ importers:
       jest: 28.1.2_@types+node@18.0.1
       lint-staged: 13.0.3
       prettier: 2.7.1
-      promises-aplus-tests: 2.1.2
       rollup: 2.75.7
       rollup-plugin-esbuild: 4.9.1_zqo64ogfzzycugxswskc4gmbhu
       ts-jest: 28.0.5_3qfdtt56lqgsefigvxjp56wxnq
       turbo: 1.3.1
       typescript: 4.7.4
+
+  packages/my-promise:
+    specifiers:
+      promises-aplus-tests: ^2.1.2
+    devDependencies:
+      promises-aplus-tests: 2.1.2
 
 packages:
 
