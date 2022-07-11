@@ -6,8 +6,16 @@
 
 使用`turborepo`改变传统的`multirepo`架构为`monorepo`，可以直接进入你感兴趣的仓库中查看详细文档
 
+---
+
 ### 手写实现符合 Promises A+规范的 my-promise
 
 实现了一个可以通过`Promises A+`规范的`my-promise`，完全使用`TypeScript`类型化实现
 
 详情请查看：[my-promise](packages/my-promise)
+
+---
+
+### 实现 EventEmitter -- 可在浏览器和 Node.js 环境下运行
+
+详情请查看：[event-emitter](packages/event-emitter)
