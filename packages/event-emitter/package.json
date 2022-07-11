@@ -1,0 +1,13 @@
+{
+  "name": "@handwritten-javascript/event-emitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c rollup.esm.config.js",
+    "test": "jest -c ../../jest.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
