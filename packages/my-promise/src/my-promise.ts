@@ -182,7 +182,7 @@ export class MyPromise<T = unknown> {
       // 根据状态去判断执行哪一个回调
       if (this.status === FULFILLED) {
         // 以宏任务的方式执行 resolvePromise 才能保证拿到 promise2 实例
-        setTimeout(() => {
+        queueMicrotask(() => {
           try {
             let x = onFulfilled!(this.value)
             // 处理 x
@@ -194,7 +194,7 @@ export class MyPromise<T = unknown> {
       }
 
       if (this.status === REJECTED) {
-        setTimeout(() => {
+        queueMicrotask(() => {
           try {
             let x = onRejected!(this.reason)
             // 处理 x
@@ -208,7 +208,7 @@ export class MyPromise<T = unknown> {
       if (this.status === PENDING) {
         // pending 状态下需要 “订阅” fulfilled 和 rejected 事件
         this.onFulfilledCallbackList.push(() => {
-          setTimeout(() => {
+          queueMicrotask(() => {
             try {
               let x = onFulfilled!(this.value)
               // 处理 x
@@ -219,7 +219,7 @@ export class MyPromise<T = unknown> {
           }, 0)
         })
         this.onRejectedCallbackList.push(() => {
-          setTimeout(() => {
+          queueMicrotask(() => {
             try {
               let x = onRejected!(this.reason)
               // 处理 x
