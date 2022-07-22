@@ -1,4 +1,5 @@
 import quickSort from './quickSort'
 import bubbleSort from './bubbleSort'
+import selectionSort from './selectionSort'
 
-export { quickSort, bubbleSort }
+export { quickSort, bubbleSort, selectionSort }
