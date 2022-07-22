@@ -1,4 +1,4 @@
-import { quickSort } from '../src'
+import { bubbleSort, quickSort } from '../src'
 
 describe('sort', () => {
   let arr: number[]
@@ -9,6 +9,11 @@ describe('sort', () => {
 
   test('quickSort', () => {
     quickSort(arr)
+    expect(arr).toEqual([1, 2, 5, 7, 7, 8, 9, 13])
+  })
+
+  test('bubbleSort', () => {
+    bubbleSort(arr)
     expect(arr).toEqual([1, 2, 5, 7, 7, 8, 9, 13])
   })
 })
