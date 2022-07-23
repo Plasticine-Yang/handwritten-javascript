@@ -13,12 +13,9 @@ export default function selectionSort(arr: number[]) {
       if (arr[j] < arr[minIdx]) minIdx = j
     }
     // 交换 i 和 minIdx
-    const temp = arr[i]
-    arr[i] = arr[minIdx]
-    arr[minIdx] = temp
+    ;[arr[i], arr[minIdx]] = [arr[minIdx], arr[i]]
   }
 }
 
 const arr = [3, 2, 5, 8, 7, 6, 1]
 selectionSort(arr)
-console.log(arr)
