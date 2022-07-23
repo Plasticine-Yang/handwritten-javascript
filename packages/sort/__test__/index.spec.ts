@@ -1,4 +1,10 @@
-import { bubbleSort, insertSort, quickSort, selectionSort } from '../src'
+import {
+  bubbleSort,
+  insertSort,
+  mergeSort,
+  quickSort,
+  selectionSort
+} from '../src'
 
 describe('sort', () => {
   let arr: number[]
@@ -25,5 +31,9 @@ describe('sort', () => {
 
   test('insertSort', () => {
     insertSort(arr)
+  })
+
+  test('mergeSort', () => {
+    arr = mergeSort(arr)
   })
 })
