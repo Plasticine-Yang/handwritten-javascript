@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 轮播图主体 */
+
+#slider {
+  position: relative;
+  width: 790px;
+  height: 340px;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.slider__item,
+.slider__item--selected {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.slider__item--selected {
+  opacity: 1;
+}
+
+/* 底部控制条 */
+
+.slider__control {
+  position: absolute;
+  padding: 5px;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+}
+
+.slider__control-buttons,
+.slider__control-buttons--selected {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.slider__control-buttons--selected {
+  background-color: #3370ff;
+}
+
+/* 左右两侧切换按钮 */
+
+.slider__next::after {
+  content: '>';
+}
+
+.slider__previous::after {
+  content: '<';
+}
+
+.slider__next,
+.slider__previous {
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 50px;
+  transform: translateY(-25px);
+  line-height: 50px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  cursor: pointer;
+}
+
+.slider__next {
+  right: 0;
+}
+
+.slider__previous {
+  left: 0;
+}
+
+#slider:hover .slider__next,
+#slider:hover .slider__previous {
+  opacity: 1;
+}
